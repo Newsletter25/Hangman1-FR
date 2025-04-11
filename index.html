@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hangman Game</title>
+    <title>Le jeu du pendu</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; }
         #hangman-container {
@@ -16,9 +16,9 @@
     </style>
 </head>
 <body>
-    <h1>Hangman Game</h1>
-    <p><strong>Clue:</strong> [Placeholder clue]</p>
-    <p>Guess the word before the hangman is complete. If you guess a correct letter, it will be filled on the dashed line. If you guess an incorrect letter, a body part will be drawn on the hangman. The game ends when the puzzle is solved or the hangman is complete.</p>
+    <h1>Le jeu du pendu</h1>
+    <p><strong>Indice:</strong> [Indice fictif]</p>
+    <p>Devinez le mot avant que le pendu ne soit complété. Si tu devines une bonne lettre, elle sera ajoutée à la ligne pointillée. Si tu devines une mauvaise lettre, une partie du corps sera dessinée sur le pendu. Le jeu se termine lorsque le mot est trouvé ou que le pendu est complété.</p>
     <div id="hangman-container"></div>
     <p id="word-display"></p>
     <input type="text" id="guess-input" maxlength="1" placeholder="Enter a letter">
@@ -26,10 +26,10 @@
     <p id="wrong-guesses"></p>
 
     <!-- Added the information page reference -->
-    <p>For more information on this topic, refer to the ____________ page.</p>
+    <p>Pour plus d’informations à ce sujet, consulter la page ________________________.</p>
 
     <script>
-        const correctWord = "DUE DILIGENCE".toUpperCase();
+        const correctWord = "DILIGENCE RAISONNABLE".toUpperCase();
         
         // Adjusted the guessedWord initialization to preserve spaces between words
         let guessedWord = correctWord.split('').map(letter => letter === ' ' ? ' ' : '_').join('');
@@ -57,9 +57,9 @@
             updateDisplay();
 
             if (guessedWord === correctWord) {
-                alert("Congratulations! You solved the puzzle.");
+                alert("Bravo! Tu as trouvé le mot.");
             } else if (incorrectGuesses >= 8) {
-                alert("Game over! The correct word was: " + correctWord);
+                alert("C'est fini! Le bon mot était: " + correctWord);
             }
         }
 
