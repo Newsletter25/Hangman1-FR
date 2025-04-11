@@ -18,20 +18,26 @@
 <body>
     <h1>Hangman Game</h1>
     <p><strong>Clue:</strong> [Placeholder clue]</p>
-    <p>Guess the word before the hangman is complete. If you guess a correct letter, it will be filled on the dashed line. If you guess an incorrect letter, a body part will be drawn on the hangman. <strong>The game ends when the puzzle is solved</strong> or the hangman is complete.</p>
+    <p>Guess the word before the hangman is complete. If you guess a correct letter, it will be filled on the dashed line. If you guess an incorrect letter, a body part will be drawn on the hangman. The game ends when the puzzle is solved or the hangman is complete.</p>
     <div id="hangman-container"></div>
     <p id="word-display"></p>
     <input type="text" id="guess-input" maxlength="1" placeholder="Enter a letter">
     <button onclick="makeGuess()">Guess</button>
     <p id="wrong-guesses"></p>
-    
+
+    <!-- Added the information page reference -->
+    <p>For more information on this topic, refer to the ____________ page.</p>
+
     <script>
         const correctWord = "DUE DILIGENCE".toUpperCase();
-        let guessedWord = correctWord.replace(/[A-Z]/g, '_');
+        
+        // Adjusted the guessedWord initialization to preserve spaces between words
+        let guessedWord = correctWord.split('').map(letter => letter === ' ' ? ' ' : '_').join('');
         let wrongGuesses = [];
         let incorrectGuesses = 0;
 
         function updateDisplay() {
+            // Display the word with spaces properly formatted
             document.getElementById('word-display').textContent = guessedWord.split('').join(' ');
             document.getElementById('hangman-container').textContent = drawHangman(incorrectGuesses);
             document.getElementById('wrong-guesses').innerHTML = wrongGuesses.map(letter => `<span style="text-decoration: line-through;">${letter}</span>`).join(' ');
@@ -68,7 +74,15 @@
                 "       _____\n      |     |\n      |     O\n      |    /|\\\n      |    / \\\n     _|_____\n",  // 6: right leg
                 "       _____\n      |     |\n      |     X\n      |    /|\\\n      |    / \\\n     _|_____\n"   // 7: X eyes (game over)
             ];
-            return hangmanStages[Math.min(stage, hangmanStages.length - 1)];
+
+            // Aligning all hangman stages vertically with consistent spacing
+            const alignedStages = hangmanStages.map(stage => {
+                return stage.split('\n').map(line => {
+                    return line.padEnd(19); // Adjust the length of each line to ensure vertical alignment
+                }).join('\n');
+            });
+
+            return alignedStages[Math.min(stage, hangmanStages.length - 1)];
         }
 
         updateDisplay();
