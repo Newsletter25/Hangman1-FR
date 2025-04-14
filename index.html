@@ -5,14 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le jeu du pendu</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
         #hangman-container {
             font-family: monospace;
-            white-space: pre-wrap; /* Makes sure \n and spaces are respected */
+            white-space: pre-wrap;
             font-size: 20px;
+            display: inline-block;
+            text-align: left;
         }
-        #wrong-guesses { margin-top: 20px; text-decoration: line-through; color: red; }
-        .hidden { display: none; }
+        #wrong-guesses {
+            margin-top: 20px;
+            text-decoration: line-through;
+            color: red;
+        }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -25,19 +36,15 @@
     <button onclick="makeGuess()">Devine</button>
     <p id="wrong-guesses"></p>
 
-    <!-- Added the information page reference -->
     <p>Pour plus d’informations à ce sujet, consulter la page <a href="https://infozone.omega.dce-eir.net/francais/r5041000/tlr/tlr09/drctrslblt-f.html" target="_blank">Responsabilité des administrateurs – Recouvrements des programmes fiscaux aux BSF/CNVR</a>.</p>
 
     <script>
-        const correctWord = "DILIGENCE RAISONNABLE".toUpperCase();
-        
-        // Adjusted the guessedWord initialization to preserve spaces between words
+        const correctWord = "DILIGENCE    RAISONNABLE".toUpperCase();
         let guessedWord = correctWord.split('').map(letter => letter === ' ' ? ' ' : '_').join('');
         let wrongGuesses = [];
         let incorrectGuesses = 0;
 
         function updateDisplay() {
-            // Display the word with spaces properly formatted
             document.getElementById('word-display').textContent = guessedWord.split('').join(' ');
             document.getElementById('hangman-container').textContent = drawHangman(incorrectGuesses);
             document.getElementById('wrong-guesses').innerHTML = wrongGuesses.map(letter => `<span style="text-decoration: line-through;">${letter}</span>`).join(' ');
@@ -65,24 +72,63 @@
 
         function drawHangman(stage) {
             const hangmanStages = [
-                "       _____\n      |     |\n      |\n      |\n      |\n     _|_____\n",  // 0: empty state (gallows)
-                "       _____\n      |     |\n      |     O\n      |\n      |\n     _|_____\n",  // 1: head
-                "       _____\n      |     |\n      |     O\n      |     |\n      |\n     _|_____\n",  // 2: torso
-                "       _____\n      |     |\n      |     O\n      |    /|\n      |\n     _|_____\n",  // 3: left arm
-                "       _____\n      |     |\n      |     O\n      |    /|\\\n      |\n     _|_____\n",  // 4: right arm
-                "       _____\n      |     |\n      |     O\n      |    /|\\\n      |    / \n     _|_____\n",  // 5: left leg
-                "       _____\n      |     |\n      |     O\n      |    /|\\\n      |    / \\\n     _|_____\n",  // 6: right leg
-                "       _____\n      |     |\n      |     X\n      |    /|\\\n      |    / \\\n     _|_____\n"   // 7: X eyes (game over)
+                "       _____\n" +
+                "      |     |\n" +
+                "      |\n" +
+                "      |\n" +
+                "      |\n" +
+                "     _|_____\n",
+
+                "       _____\n" +
+                "      |     |\n" +
+                "      |     O\n" +
+                "      |\n" +
+                "      |\n" +
+                "     _|_____\n",
+
+                "       _____\n" +
+                "      |     |\n" +
+                "      |     O\n" +
+                "      |     |\n" +
+                "      |\n" +
+                "     _|_____\n",
+
+                "       _____\n" +
+                "      |     |\n" +
+                "      |     O\n" +
+                "      |    /|\n" +
+                "      |\n" +
+                "     _|_____\n",
+
+                "       _____\n" +
+                "      |     |\n" +
+                "      |     O\n" +
+                "      |    /|\\\n" +
+                "      |\n" +
+                "     _|_____\n",
+
+                "       _____\n" +
+                "      |     |\n" +
+                "      |     O\n" +
+                "      |    /|\\\n" +
+                "      |    / \n" +
+                "     _|_____\n",
+
+                "       _____\n" +
+                "      |     |\n" +
+                "      |     O\n" +
+                "      |    /|\\\n" +
+                "      |    / \\\n" +
+                "     _|_____\n",
+
+                "       _____\n" +
+                "      |     |\n" +
+                "      |     X\n" +
+                "      |    /|\\\n" +
+                "      |    / \\\n" +
+                "     _|_____\n"
             ];
-
-            // Aligning all hangman stages vertically with consistent spacing
-            const alignedStages = hangmanStages.map(stage => {
-                return stage.split('\n').map(line => {
-                    return line.padEnd(19); // Adjust the length of each line to ensure vertical alignment
-                }).join('\n');
-            });
-
-            return alignedStages[Math.min(stage, hangmanStages.length - 1)];
+            return hangmanStages[Math.min(stage, hangmanStages.length - 1)];
         }
 
         updateDisplay();
